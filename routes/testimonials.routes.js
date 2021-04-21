@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { v4: uuidv4 } = require('uuid');
 
 router.route('/testimonials').get((req,res) => {
   res.json(db.testimonials);
@@ -29,24 +30,24 @@ router.route('/testimonials').post((req,res) => {
 
 router.route('/testimonials/:id').put((req,res) => {
   db.testimonials.forEach(testimonial => {
-    if(testimonial.id && testimonial.id == req.params.id) {
+    if(testimonial.id == req.params.id && testimonial.id) {
       testimonial.author = req.body.author;
       testimonial.text = req.body.text;
       return res.json(db.testimonials);
     }
-    else res.status(404).json({ message: 'Not found...' });
   });
+  res.status(404).json({ message: 'Not found...' });
 });
 
-router.route('/testimonials/:id', (req,res) => {
+router.route('/testimonials/:id').delete((req,res) => {
   db.testimonials.forEach(testimonial => {
     if(testimonial.id && testimonial.id == req.params.id) {
-      const index = db.testimonials.indexOf(element);
+      const index = db.testimonials.indexOf(testimonial);
       db.testimonials.splice(index,1);
       return res.json(db.testimonials);
     }
-    else res.status(404).json({ message: 'Not found...' });
-  })
+  });
+  res.status(404).json({ message: 'Not found...' });
 });
 
 module.exports = router;
