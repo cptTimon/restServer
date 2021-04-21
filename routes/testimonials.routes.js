@@ -16,7 +16,7 @@ router.route('/testimonials/:id').get((req,res) => {
   const item = db.testimonials.find(item => item.id == req.params.id);
   if (item) res.json(item);
   else res.status(404).json({ message: 'Not found...' });
-})
+});
 
 router.route('/testimonials').post((req,res) => {
   const testimonial = {
