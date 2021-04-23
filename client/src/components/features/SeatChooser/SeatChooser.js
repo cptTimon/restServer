@@ -4,10 +4,14 @@ import { Button, Progress, Alert } from 'reactstrap';
 import './SeatChooser.scss';
 
 class SeatChooser extends React.Component {
-  
   componentDidMount() {
     const { loadSeats } = this.props;
     loadSeats();
+    // eslint-disable-next-line no-unused-vars
+    let intervalId = setInterval(() => loadSeats(), 120000);
+  }
+  componentWillUnmount(){
+    clearInterval(this.intervalId);
   }
 
   isTaken = (seatId) => {
@@ -24,7 +28,6 @@ class SeatChooser extends React.Component {
     else if(isTaken(seatId)) return <Button key={seatId} className="seats__seat" disabled color="secondary">{seatId}</Button>;
     else return <Button key={seatId} color="primary" className="seats__seat" outline onClick={(e) => updateSeat(e, seatId)}>{seatId}</Button>;
   }
-
   render() {
 
     const { prepareSeat } = this;
