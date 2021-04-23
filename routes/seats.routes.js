@@ -21,8 +21,14 @@ router.route('/seats').post((req,res) => {
     client: req.body.client,
     email: req.body.email
   };
-  db.seats.push(seat);
-  return res.json(db.seats);
+  
+  if(db.seats.some(chosenSeat => (chosenSeat.day == req.body.day && chosenSeat.seat == req.body.seat))) {
+    return res.status(404).json({ message: 'The seat is taken'});
+  }
+  else {
+    db.seats.push(seat);
+    return res.json(db.seats);
+  }
 });
 
 router.route('/seats/:id').delete((req,res) => {
