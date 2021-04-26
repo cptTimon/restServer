@@ -2,7 +2,7 @@ import React from 'react'
 
 import './Logo.scss';
 
-const Logo = ({ links, location }) => (
+const Logo = () => (
   <h1 className="logo">Blog.app</h1>
 );
 

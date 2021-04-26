@@ -13,7 +13,7 @@ router.route('/testimonials/random').get((req,res) => {
 });
 
 router.route('/testimonials/:id').get((req,res) => {
-  const item = db.testimonials.find(item => item.id == req.params.id);
+  const item = db.testimonials.find(item => item.id === req.params.id);
   if (item) res.json(item);
   else res.status(404).json({ message: 'Not found...' });
 });
@@ -30,7 +30,7 @@ router.route('/testimonials').post((req,res) => {
 
 router.route('/testimonials/:id').put((req,res) => {
   db.testimonials.forEach(testimonial => {
-    if(testimonial.id == req.params.id && testimonial.id) {
+    if(testimonial.id === req.params.id && testimonial.id) {
       testimonial.author = req.body.author;
       testimonial.text = req.body.text;
       return res.json(db.testimonials);
@@ -41,7 +41,7 @@ router.route('/testimonials/:id').put((req,res) => {
 
 router.route('/testimonials/:id').delete((req,res) => {
   db.testimonials.forEach(testimonial => {
-    if(testimonial.id && testimonial.id == req.params.id) {
+    if(testimonial.id && testimonial.id === req.params.id) {
       const index = db.testimonials.indexOf(testimonial);
       db.testimonials.splice(index,1);
       return res.json(db.testimonials);
