@@ -9,7 +9,7 @@ class SeatChooser extends React.Component {
   componentDidMount() {
     const { loadSeats, updateSeats } = this.props;
     loadSeats();
-    this.socket = io(process.env.NODE_ENV === 'production' ? 'localhost:8000' : 'localhost:3000');
+    this.socket = io(process.env.NODE_ENV === 'production' ? process.env.PUBLIC_URL : 'localhost:8000'); 
     this.socket.on('seatsUpdated', seats => updateSeats(seats));
   }
 
