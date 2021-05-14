@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 
 const app = express();
-const personsRoutes = require('./routes/persons.routes');
+const usersRoutes = require('./routes/users.routes');
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use('/api', personsRoutes);
+app.use('/api', usersRoutes);
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);

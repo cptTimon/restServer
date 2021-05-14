@@ -1,8 +1,8 @@
-const Person = require('../models/person.model');
+const User = require('../models/user.model');
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Person.find());
+    res.json(await User.find());
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -11,7 +11,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const dep = await Person.findById(req.params.id);
+    const dep = await User.findById(req.params.id);
     if(!dep) res.status(404).json({ message: 'Not found...' });
     else res.json(dep);
   }
@@ -20,22 +20,22 @@ exports.getById = async (req, res) => {
   }
 };
 
-exports.postPerson = async (req, res) => {
+exports.postUser = async (req, res) => {
   try {
     const { fullName } = req.body;
-    const newPerson = new Person({ fullName });
-    await newPerson.save();
+    const newUser = new User({ fullName });
+    await newUser.save();
     res.json({ message: 'Ok' });
   } catch(err) {
     res.status(500).json({ message: err });
   }
 };
 
-exports.deletePerson = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
-    const dep = await Person.findById(req.params.id);
+    const dep = await User.findById(req.params.id);
     if(dep) {
-      await Person.deleteOne({ _id: req.params.id });
+      await User.deleteOne({ _id: req.params.id });
     }
     else res.status(404).json({ message: 'Not found...' });
   }
@@ -44,10 +44,10 @@ exports.deletePerson = async (req, res) => {
   }
 };
 
-exports.putPerson = async (req, res) => {
+exports.putUser = async (req, res) => {
   try {
     const { fullName } = req.body;
-    const dep = await Person.findById(req.params.id);
+    const dep = await User.findById(req.params.id);
     if(dep) {
       dep.fullName = fullName;
     }
