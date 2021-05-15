@@ -1,53 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
-const { v4: uuidv4 } = require('uuid');
+const TestimonialController = require('../controllers/testimonials.controllers');
 
-router.route('/testimonials').get((req,res) => {
-  res.json(db.testimonials);
-});
 
-router.route('/testimonials/random').get((req,res) => {
-  const item = db.testimonials[Math.floor(Math.random() * db.testimonials.length)];
-  res.json(item);
-});
+router.get('/testimonials', TestimonialController.getAll);
 
-router.route('/testimonials/:id').get((req,res) => {
-  const item = db.testimonials.find(item => item.id === req.params.id);
-  if (item) res.json(item);
-  else res.status(404).json({ message: 'Not found...' });
-});
+router.get('/testimonials/:id', TestimonialController.getById);
 
-router.route('/testimonials').post((req,res) => {
-  const testimonial = {
-    id: uuidv4(),
-    author: req.body.author,
-    text: req.body.text
-  }
-  db.testimonials.push(testimonial);
-  return res.json(testimonial);
-});
+router.post('/testimonials', TestimonialController.postTestimonial);
 
-router.route('/testimonials/:id').put((req,res) => {
-  db.testimonials.forEach(testimonial => {
-    if(testimonial.id === req.params.id && testimonial.id) {
-      testimonial.author = req.body.author;
-      testimonial.text = req.body.text;
-      return res.json(db.testimonials);
-    }
-  });
-  res.status(404).json({ message: 'Not found...' });
-});
+router.delete('/testimonials/:id', TestimonialController.deleteTestimonial); 
 
-router.route('/testimonials/:id').delete((req,res) => {
-  db.testimonials.forEach(testimonial => {
-    if(testimonial.id && testimonial.id === req.params.id) {
-      const index = db.testimonials.indexOf(testimonial);
-      db.testimonials.splice(index,1);
-      return res.json(db.testimonials);
-    }
-  });
-  res.status(404).json({ message: 'Not found...' });
-});
+router.put('/testimonials/:id', TestimonialController.putTestimonial);
 
 module.exports = router;
