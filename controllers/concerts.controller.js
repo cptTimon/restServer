@@ -1,8 +1,20 @@
 const Concert = require('../models/concert.model');
+const Seat = require('../models/seat.model');
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Concert.find().populate('performer'));
+    const seats = await Seat.find();
+    const concerts = await Concert.find().populate('performer');
+    const mappedConcerts = await concerts.map(concert => {
+      const takenSeats = seats.filter(seat => seat.day === concert.day);
+      const freeSeats = 50 - takenSeats.length;
+      return {
+        ...concert,
+        tickets: freeSeats
+      }
+    });
+    console.log('mapowane: ', mappedConcerts);
+    res.json(mappedConcerts);
   }
   catch(err) {
     res.status(500).json({ message: err });
