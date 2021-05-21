@@ -4,12 +4,12 @@ const Seat = require('../models/seat.model');
 exports.getAll = async (req, res) => {
   try {
     const seats = await Seat.find();
-    const concerts = await Concert.find().populate('performer');
-    const mappedConcerts = await concerts.map(concert => {
+    const concerts = await Concert.find();
+    const mappedConcerts = concerts.map(concert => {
       const takenSeats = seats.filter(seat => seat.day === concert.day);
-      const freeSeats = 50 - takenSeats.length;
+      const freeSeats = 50. - takenSeats.length;
       return {
-        ...concert,
+        ...concert.toObject(),
         tickets: freeSeats
       }
     });
@@ -23,7 +23,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const dep = await Concert.findById(req.params.id).populate('performer');
+    const dep = await Concert.findById(req.params.id);
     if(!dep) res.status(404).json({ message: 'Not found...' });
     else res.json(dep);
   }

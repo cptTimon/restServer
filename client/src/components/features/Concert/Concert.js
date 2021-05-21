@@ -8,16 +8,16 @@ const Concert = ({ performer, price, genre, day, image, tickets }) => (
     <Row noGutters>
       <Col xs="6">
         <div className="concert__image-container">
-          <img className="concert__image-container__img" src={image} alt={performer.fullName}/>
+          <img className="concert__image-container__img" src={image} alt={ performer }/>
         </div>
       </Col>
       <Col xs="6">
         <div className="concert__info">
-          <img className="concert__info__back" src={image} alt={performer.fullName}/>
-          <h2 className="concert__info__performer">{ performer.fullName }</h2>
+          <img className="concert__info__back" src={image} alt={performer}/>
+          <h2 className="concert__info__performer">{ performer }</h2>
           <h3 className="concert__info__genre">{ genre }</h3>
           <p className="concert__info__ticket"> Only: { tickets } tickets left!</p>
-          <p className="concert__info__day-n-price">Day: {day}, Price: { price }$</p>
+          <p className="concert__info__day-n-price">Day: { day }, Price: { price }$</p>
         </div>
       </Col>
     </Row>
