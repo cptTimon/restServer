@@ -13,7 +13,6 @@ exports.getAll = async (req, res) => {
         tickets: freeSeats
       }
     });
-    console.log('mapowane: ', mappedConcerts);
     res.json(mappedConcerts);
   }
   catch(err) {
