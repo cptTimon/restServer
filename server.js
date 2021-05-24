@@ -37,7 +37,8 @@ app.use((req,res) => {
 });
 
 // connects our backend code with the mongo database
-mongoose.connect('mongodb+srv://cptTimon:5SAPDGWwszyVeeCo@cluster0.fv8qn.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
+const dbURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost:27017/NewWaveDBTest' : 'mongodb+srv://cptTimon:5SAPDGWwszyVeeCo@cluster0.fv8qn.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
+mongoose.connect(dbURI, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -55,3 +56,5 @@ const io = socket(server);
 io.on('connection', (socket) => {
   console.log('New client! Its id – ' + socket.id);
 });
+
+module.exports = server;
