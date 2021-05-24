@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 
 
 const app = express();
@@ -11,6 +12,7 @@ const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
 
+app.use(helmet());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/client/build')));
 
@@ -39,7 +41,7 @@ app.use((req,res) => {
 });
 
 // connects our backend code with the mongo database
-mongoose.connect('mongodb+srv://cptTimon:5SAPDGWwszyVeeCo@cluster0.fv8qn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect(`mongodb+srv://cptTimon:${process.env.dbpass}@cluster0.fv8qn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
