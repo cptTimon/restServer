@@ -52,6 +52,14 @@
       bottom: 1rem;
       left: 1.5rem;
     }
+
+    &__ticket {
+      opacity: 0.8;
+      font-size: 1.1rem;
+      position: absolute;
+      bottom: 3rem;
+      left: 2rem;
+    }
   
   }
 
@@ -72,6 +80,7 @@
     transform: scale(1.1);
   }
 }
+
 
 @media (max-width: 768px) {
 

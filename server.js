@@ -7,7 +7,6 @@ const helmet = require('helmet');
 
 
 const app = express();
-const usersRoutes = require('./routes/users.routes');
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
@@ -25,7 +24,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use('/api', usersRoutes);
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);
@@ -41,7 +39,10 @@ app.use((req,res) => {
 });
 
 // connects our backend code with the mongo database
-mongoose.connect(`mongodb+srv://cptTimon:${process.env.dbpass}@cluster0.fv8qn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, { useNewUrlParser: true });
+
+const dbURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost:27017/NewWaveDBTest' : 'mongodb+srv://cptTimon:5SAPDGWwszyVeeCo@cluster0.fv8qn.mongodb.net/NewWaveDB?retryWrites=true&w=majority';
+mongoose.connect(dbURI, { useNewUrlParser: true });
+
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -59,3 +60,5 @@ const io = socket(server);
 io.on('connection', (socket) => {
   console.log('New client! Its id – ' + socket.id);
 });
+
+module.exports = server;
